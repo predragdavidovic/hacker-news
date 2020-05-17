@@ -1,0 +1,34 @@
+.Story {
+    font-size: 14px;
+    padding: 0 16px;
+    min-height: 40px;
+    flex-wrap: wrap;
+    &_meta {
+        font-size: 10.6px;
+        span {
+            a {
+                color: #696969;
+                text-decoration: none;
+            }
+        }
+    }
+    &_separator {
+        margin: 0 5px;
+        color: #696969;
+    }
+    &_comment {
+        color: #000;
+        font-size: 12px;
+        width: 100%;
+        line-height: normal;
+        font-style: normal;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        font-variant-caps: normal;
+        font-variant-east-asian: normal;
+        font-variant-ligatures: normal;
+        font-variant-numeric: normal;
+        font-weight: 400;
+    }
+
+}

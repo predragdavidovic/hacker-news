@@ -26,7 +26,7 @@
   align-items: center; }
 
 .header_search_element {
-  background: url("../../../assets/lupa.svg");
+  background: url("../../../assets/search.svg");
   width: 30px;
   height: 31px;
   background-size: contain;

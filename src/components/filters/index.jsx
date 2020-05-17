@@ -1,23 +1,48 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {fetchNewsAsync, sortByPopularity, sortByDate} from '../../actions/index.js'
+
 import './style/style.css'
 
 class Filters extends Component {
+    constructor(props){
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+
+    handleChange(selectOption, list){
+        switch(selectOption){
+            case 'popularity': {
+                this.props.sortByPopularity(list)
+                return;
+            }
+            case 'date': {
+                this.props.sortByDate(list)
+                return;
+            }
+            default: {
+                return;
+            }
+        }
+    }
 
     render(){
+        const {list} = this.props;
         return(
             <div className="filter">
-                
+
                 <label for="search"> Search </label>
-                <select id="search">
-                    <option value="all">All</option>
-                    <option value="stories">Stories</option>
-                    <option value="comments">Comments</option>
+                <select id="search" onChange={(e) => this.props.fetchNews()}>
+                    <option value="topstories">Top Stories</option>
+                    <option value="newstories">New Stories</option>
+                    <option value="beststories">Best Stories</option>
                 </select>
 
                 <label for="by"> by </label>
-                <select id="by">
-                    <option value="popularity">All</option>
-                    <option value="Date">Stories</option>
+                <select id="by" onChange={(event) => this.handleChange(event.currentTarget.value, list)}>
+                    <option value="popularity">Popularity</option>
+                    <option value="date">Date</option>
                 </select>
 
                 <label for="for"> for </label>
@@ -34,4 +59,17 @@ class Filters extends Component {
     }
 }
 
-export default Filters;
+function mapStateToProps(state){
+    const {list} = state.news;
+    return {list};
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchNews: event => dispatch(fetchNewsAsync(event)),
+        sortByPopularity: item => dispatch(sortByPopularity(item)),
+        sortByDate: item => dispatch(sortByDate(item))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filters);
