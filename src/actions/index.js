@@ -15,17 +15,24 @@ fetchCompleted,
 setCurrentPage,
 saveVisitedPage
 
-export function saveAllIds(data){
-    return {
-        type: SAVE_ALL_IDS,
-        ids: data
-    }
-}
-
 export function fetchStart(){
     return {
         type: FETCH_START,
         isFetching: true,
+    }
+}
+
+export function fetchCompleted() {
+    return {
+        type: FETCH_COMPLETED,
+        isFetching: false,
+    }
+}
+
+export function saveAllIds(data){
+    return {
+        type: SAVE_ALL_IDS,
+        ids: data
     }
 }
 
@@ -48,12 +55,5 @@ export function newsItemSave(item, pageNumber){
         type: NEWS_ITEM_SAVE,
         page: pageNumber,
         newsItem: item
-    }
-}
-
-export function fetchCompleted() {
-    return {
-        type: FETCH_COMPLETED,
-        isFetching: false,
     }
 }
