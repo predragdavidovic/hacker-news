@@ -17,6 +17,10 @@
         border-radius: 2px;
         font-weight: 400;
         background-color: transparent;
+        &_selected {
+            color: #ff742b;
+            border: 1px solid #ff742b;
+        }
     }
     &_item:hover {
         cursor: pointer;
