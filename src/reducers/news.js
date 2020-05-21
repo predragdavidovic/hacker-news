@@ -7,6 +7,7 @@ import {
     SAVE_ALL_IDS,
     SAVE_VISITED_PAGE_NUMBER,
     SET_CURRENT_PAGE,
+    CLEAN_REDUCER,
 } from '../actions/index.js'
 
 import {
@@ -84,6 +85,12 @@ const newsReducer = (state = initial, action) => {
             return {
                 ...state,
                 list: sorted
+            }
+        }
+        case CLEAN_REDUCER: {
+            return {
+                list: [],
+                newsIds: [],
             }
         }
         default: 

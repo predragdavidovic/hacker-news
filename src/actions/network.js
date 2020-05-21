@@ -4,16 +4,17 @@ import {
     newsItemSave,
     fetchCompleted,
     setCurrentPage,
-    saveVisitedPage
+    saveVisitedPage,
+    cleanReducer,
 } from './index.js'
 
 const numberOfItemsFirstPage = 40;
 
-export function fetchAllStoriesIdsAsync(){
+export function fetchAllStoriesIdsAsync(type='topstories'){
     return function(dispatch) {
+        dispatch(cleanReducer())
         dispatch(fetchStart())
-        const allStoriesUrl = `https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty`;
-
+        const allStoriesUrl = `https://hacker-news.firebaseio.com/v0/${type}.json?print=pretty`;
         fetch(allStoriesUrl).
         then(resp => resp.json()).
         then(item => dispatch(saveAllIds(item))).
