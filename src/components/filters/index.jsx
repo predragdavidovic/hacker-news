@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {sortByPopularity, sortByDate} from '../../actions/sort.js'
+import {sortByPopularity, sortByDate} from '../../actions/sort.js';
+import {fetchAllStoriesIdsAsync} from '../../actions/network.js';
 
 import './style/style.css'
 
@@ -8,6 +9,7 @@ class Filters extends Component {
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
     handleChange(selectOption, list , currentPage){
@@ -25,6 +27,9 @@ class Filters extends Component {
             }
         }
     }
+    handleSearchChange(type){
+        this.props.fetchAllStoriesIdsAsync(type)
+    }
 
     render(){
         const {list, currentPage} = this.props;
@@ -32,7 +37,7 @@ class Filters extends Component {
             <div className="filter">
 
                 <label htmlFor="search"> Search </label>
-                <select id="search" onChange={(e) => this.props.fetchNews()}>
+                <select id="search" onChange={(e) => this.handleSearchChange(e.currentTarget.value)}>
                     <option value="topstories">Top Stories</option>
                     <option value="newstories">New Stories</option>
                     <option value="beststories">Best Stories</option>
@@ -43,16 +48,6 @@ class Filters extends Component {
                     <option value="popularity">Popularity</option>
                     <option value="date">Date</option>
                 </select>
-
-                <label htmlFor="for"> for </label>
-                <select id="htmlFor">
-                    <option value="alltime">All time    </option>
-                    <option value="last24">Last 24h</option>
-                    <option value="pastweek">Past Week</option>
-                    <option value="pastmonth">Past Month</option>
-                    <option value="pastyear">Past Year</option>
-                </select>
-
             </div>
         )
     }
@@ -66,7 +61,9 @@ function mapStateToProps(state){
 const mapDispatchToProps = dispatch => {
     return {
         sortByPopularity: (items,currentPage) => dispatch(sortByPopularity(items, currentPage)),
-        sortByDate: (items,currentPage) => dispatch(sortByDate(items, currentPage))
+        sortByDate: (items,currentPage) => dispatch(sortByDate(items, currentPage)),
+        
+        fetchAllStoriesIdsAsync: (type) => dispatch(fetchAllStoriesIdsAsync(type))
     }
 }
 

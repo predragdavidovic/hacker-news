@@ -5,8 +5,9 @@ export const FETCH_COMPLETED = 'FETCH_COMPLETED';
 export const SAVE_ALL_IDS = "SAVE_ALL_IDS";
 
 export const SAVE_VISITED_PAGE_NUMBER = "SAVE_VISITED_PAGE_NUMBER";
-
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+
+export const CLEAN_REDUCER = "CLEAN_REDUCER";
 
 fetchStart,
 saveAllIds,
@@ -55,5 +56,11 @@ export function newsItemSave(item, pageNumber){
         type: NEWS_ITEM_SAVE,
         page: pageNumber,
         newsItem: item
+    }
+}
+
+export function cleanReducer(){
+    return {
+        type: CLEAN_REDUCER,
     }
 }
