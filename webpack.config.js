@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
     entry: './src/main.js',
@@ -14,7 +15,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Output Managment',
             template: './src/template.html'
-        })
+        }),
+        new MomentLocalesPlugin(),
     ],
     module: {
         rules: [
@@ -38,10 +40,15 @@ module.exports = {
                 ]
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 loader: "babel-loader",
                 exclude: /node_modules/,
-            }
+            },
+            {
+                test: /\.js$/,
+                loader: 'eslint-loader',
+                exclude: /node_modules/,
+              },
         ],
     },
     output: {

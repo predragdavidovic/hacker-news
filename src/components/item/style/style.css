@@ -1,0 +1,30 @@
+.Story {
+  font-size: 14px;
+  padding: 0 16px;
+  min-height: 40px;
+  flex-wrap: wrap; }
+
+.Story_meta {
+  font-size: 10.6px; }
+
+.Story_meta span a {
+  color: #696969;
+  text-decoration: none; }
+
+.Story_separator {
+  margin: 0 5px;
+  color: #696969; }
+
+.Story_comment {
+  color: #000;
+  font-size: 12px;
+  width: 100%;
+  line-height: normal;
+  font-style: normal;
+  -webkit-font-feature-settings: normal;
+  font-feature-settings: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: normal;
+  font-weight: 400; }

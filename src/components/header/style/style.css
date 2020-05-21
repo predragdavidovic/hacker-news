@@ -1,0 +1,51 @@
+.header {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1024px;
+  height: 60px;
+  background: #ff742b; }
+
+.header_logo {
+  background-image: url("../../../assets/logo-hn.png");
+  background-size: contain;
+  width: 48px;
+  height: 48px;
+  margin-right: 5px; }
+
+.header_name {
+  font-size: 18px;
+  line-height: 1;
+  margin-right: 10px; }
+
+.header_search {
+  display: flex;
+  flex-grow: 1;
+  background: #FFF;
+  height: 70%;
+  align-items: center; }
+
+.header_search_element {
+  background: url("../../../assets/search.svg");
+  width: 30px;
+  height: 31px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0 15px 0 5px; }
+
+.header_search input {
+  width: 100%;
+  font-size: 18px;
+  border: 0; }
+
+.header_settings {
+  display: flex;
+  align-items: center;
+  margin: 0px 10px; }
+
+.header_settings_image {
+  background-image: url("../../../assets/settings_button.png");
+  background-size: contain;
+  height: 35px;
+  width: 35px;
+  margin: 0 5px; }

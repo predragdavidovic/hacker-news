@@ -1,0 +1,8 @@
+.search {
+    &_result {
+        background: #f6f6ef;
+    }
+    &_result:last-child {
+        padding-bottom: 10px;
+    }
+}

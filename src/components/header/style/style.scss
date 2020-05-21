@@ -1,0 +1,52 @@
+.header {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 1024px;
+    height: 60px;
+    background: #ff742b;
+    &_logo {
+        background-image: url('../../../assets/logo-hn.png');
+        background-size: contain;
+        width: 48px;
+        height: 48px;
+        margin-right: 5px;
+    }
+    &_name {
+        font-size: 18px;
+        line-height: 1;
+        margin-right: 10px;
+    }
+    &_search {
+        display: flex;
+        flex-grow: 1;
+        background: #FFF;
+        height: 70%;    
+        align-items: center;
+        &_element {
+            background: url('../../../assets/search.svg');
+            width: 30px;
+            height: 31px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin: 0 15px 0 5px;
+        }
+        input {
+            width: 100%;
+            font-size: 18px;
+            border: 0;
+        }
+    }
+    &_settings {
+        display: flex;
+        align-items: center;
+        margin: 0px 10px;
+        &_image {
+            background-image: url('../../../assets/settings_button.png');
+            background-size: contain;
+            height: 35px;
+            width: 35px;
+            margin: 0 5px;
+        }
+    }
+}

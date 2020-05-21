@@ -1,0 +1,9 @@
+.filter {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background: #f6f6ef;
+  font-size: 12px; }
+
+.filter label {
+  margin: 0 10px; }
