@@ -88,7 +88,14 @@ const newsReducer = (state = initial, action) => {
             }
         }
         case CLEAN_REDUCER: {
+<<<<<<< HEAD
             return initial
+=======
+            return {
+                list: [],
+                newsIds: [],
+            }
+>>>>>>> 33145ff1a426ef9dcf24a3539821d6e872b5a0f5
         }
         default: 
             return state
