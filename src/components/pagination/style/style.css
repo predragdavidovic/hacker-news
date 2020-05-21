@@ -19,5 +19,9 @@
   font-weight: 400;
   background-color: transparent; }
 
+.pagination_item_selected {
+  color: #ff742b;
+  border: 1px solid #ff742b; }
+
 .pagination_item:hover {
   cursor: pointer; }

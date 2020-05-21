@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {sortByPopularity, sortByDate} from '../../actions/sort.js'
+import {sortByPopularity, sortByDate} from '../../actions/sort.js';
+import {fetchAllStoriesIdsAsync} from '../../actions/network.js';
 
 import './style/style.css'
 
@@ -8,17 +9,17 @@ class Filters extends Component {
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
-
-    handleChange(selectOption, list){
+    handleChange(selectOption, list , currentPage){
         switch(selectOption){
             case 'popularity': {
-                this.props.sortByPopularity(list)
+                this.props.sortByPopularity(list, currentPage)
                 return;
             }
             case 'date': {
-                this.props.sortByDate(list)
+                this.props.sortByDate(list, currentPage)
                 return;
             }
             default: {
@@ -26,48 +27,43 @@ class Filters extends Component {
             }
         }
     }
+    handleSearchChange(type){
+        this.props.fetchAllStoriesIdsAsync(type)
+    }
 
     render(){
-        const {list} = this.props;
+        const {list, currentPage} = this.props;
         return(
             <div className="filter">
 
                 <label htmlFor="search"> Search </label>
-                <select id="search" onChange={(e) => this.props.fetchNews()}>
+                <select id="search" onChange={(e) => this.handleSearchChange(e.currentTarget.value)}>
                     <option value="topstories">Top Stories</option>
                     <option value="newstories">New Stories</option>
                     <option value="beststories">Best Stories</option>
                 </select>
 
                 <label htmlFor="by"> by </label>
-                <select id="by" onChange={(event) => this.handleChange(event.currentTarget.value, list)}>
+                <select id="by" onChange={(event) => this.handleChange(event.currentTarget.value, list, currentPage)}>
                     <option value="popularity">Popularity</option>
                     <option value="date">Date</option>
                 </select>
-
-                <label htmlFor="for"> for </label>
-                <select id="htmlFor">
-                    <option value="alltime">All time    </option>
-                    <option value="last24">Last 24h</option>
-                    <option value="pastweek">Past Week</option>
-                    <option value="pastmonth">Past Month</option>
-                    <option value="pastyear">Past Year</option>
-                </select>
-
             </div>
         )
     }
 }
 
 function mapStateToProps(state){
-    const {list} = state.news;
-    return {list};
+    const {list, currentPage} = state.news;
+    return {list, currentPage};
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        sortByPopularity: item => dispatch(sortByPopularity(item)),
-        sortByDate: item => dispatch(sortByDate(item))
+        sortByPopularity: (items,currentPage) => dispatch(sortByPopularity(items, currentPage)),
+        sortByDate: (items,currentPage) => dispatch(sortByDate(items, currentPage)),
+        
+        fetchAllStoriesIdsAsync: (type) => dispatch(fetchAllStoriesIdsAsync(type))
     }
 }
 
