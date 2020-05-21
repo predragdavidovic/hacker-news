@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchNewsAsync, sortByPopularity, sortByDate} from '../../actions/index.js'
+import {sortByPopularity, sortByDate} from '../../actions/sort.js'
 
 import './style/style.css'
 
@@ -32,21 +32,21 @@ class Filters extends Component {
         return(
             <div className="filter">
 
-                <label for="search"> Search </label>
+                <label htmlFor="search"> Search </label>
                 <select id="search" onChange={(e) => this.props.fetchNews()}>
                     <option value="topstories">Top Stories</option>
                     <option value="newstories">New Stories</option>
                     <option value="beststories">Best Stories</option>
                 </select>
 
-                <label for="by"> by </label>
+                <label htmlFor="by"> by </label>
                 <select id="by" onChange={(event) => this.handleChange(event.currentTarget.value, list)}>
                     <option value="popularity">Popularity</option>
                     <option value="date">Date</option>
                 </select>
 
-                <label for="for"> for </label>
-                <select id="for">
+                <label htmlFor="for"> for </label>
+                <select id="htmlFor">
                     <option value="alltime">All time    </option>
                     <option value="last24">Last 24h</option>
                     <option value="pastweek">Past Week</option>
@@ -66,7 +66,6 @@ function mapStateToProps(state){
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchNews: event => dispatch(fetchNewsAsync(event)),
         sortByPopularity: item => dispatch(sortByPopularity(item)),
         sortByDate: item => dispatch(sortByDate(item))
     }

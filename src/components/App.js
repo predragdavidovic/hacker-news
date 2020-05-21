@@ -4,8 +4,10 @@ import {connect} from 'react-redux';
 import Header from './header/index.jsx';
 import Filters from './filters/index.jsx';
 import Result from './result/index.jsx';
+import Pagination from './pagination/index.jsx';
 
-import {fetchNewsAsync} from '../actions/index.js'
+import {saveVisitedPage} from '../actions/index.js'
+import {fetchAllStoriesIdsAsync} from '../actions/network.js'
 
 import './style.css'
 
@@ -15,18 +17,25 @@ class App extends Component {
     }
 
     componentDidMount(){
-        this.props.fetchNewsAsync()
+        this.props.fetchAllStoriesIdsAsync();
     }
 
     render(){
+        const pages = this.props.newsIds.map((item, index) => index);
         return (
-            <div>
+            <div className="container">
                 <Header/>
                 <Filters/>
                 <Result/>
+                <Pagination items={pages}/>
             </div>
         )
     }
 }
 
-export default connect(null, {fetchNewsAsync})(App);
+function mapStateToProps(state){
+    const {newsIds} = state.news;
+    return {newsIds};
+}
+
+export default connect(mapStateToProps, {fetchAllStoriesIdsAsync, saveVisitedPage})(App);

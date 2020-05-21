@@ -7,7 +7,7 @@ function Item(item) {
         const date = new Date(item.time*1000);
         dateArray.push(date.getFullYear(), date.getMonth(), date.getDate());
     return(
-        <article className="Story">
+        <article className="Story" key={item.id}>
             <div className="Story_container">
                 <div className="Story_data">
                     <div className="Story_meta">

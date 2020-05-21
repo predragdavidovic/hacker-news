@@ -1,62 +1,59 @@
-export const FETCH_NEWS_START = 'FETCH_NEWS_START';
-export const NEWS_SAVE = 'NEWS_SAVE';
-export const FETCH_NEWS_COMPLETED = 'FETCH_NEWS_COMPLETED';
-export const SORT_BY_POPULARITY = 'SORT_BY_POPULARITY';
-export const SORT_BY_DATE = 'SORT_BY_DATE';
+export const FETCH_ALL_STORIES_IDS = 'FETCH_ALL_STORIES_IDS';
+export const FETCH_START = 'FETCH_START';
+export const NEWS_ITEM_SAVE = 'NEWS_ITEM_SAVE';
+export const FETCH_COMPLETED = 'FETCH_COMPLETED';
+export const SAVE_ALL_IDS = "SAVE_ALL_IDS";
 
-function fetchNewsStart(){
+export const SAVE_VISITED_PAGE_NUMBER = "SAVE_VISITED_PAGE_NUMBER";
+
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+
+fetchStart,
+saveAllIds,
+newsItemSave,
+fetchCompleted,
+setCurrentPage,
+saveVisitedPage
+
+export function saveAllIds(data){
     return {
-        type: FETCH_NEWS_START,
+        type: SAVE_ALL_IDS,
+        ids: data
+    }
+}
+
+export function fetchStart(){
+    return {
+        type: FETCH_START,
         isFetching: true,
     }
 }
 
-function newsSave(item){
+export function saveVisitedPage(numPage){
     return {
-        type: NEWS_SAVE,
+        type: SAVE_VISITED_PAGE_NUMBER,
+        numPage
+    }
+}
+
+export function setCurrentPage(currentPage){
+    return {
+        type: SET_CURRENT_PAGE,
+        currentPage
+    }
+}
+
+export function newsItemSave(item, pageNumber){
+    return {
+        type: NEWS_ITEM_SAVE,
+        page: pageNumber,
         newsItem: item
     }
 }
 
-function fetchNewsCompleted() {
+export function fetchCompleted() {
     return {
-        type: FETCH_NEWS_COMPLETED,
+        type: FETCH_COMPLETED,
         isFetching: false,
-    }
-}
-
-export function sortByPopularity(items){
-    return {
-        type: SORT_BY_POPULARITY,
-        items
-    }
-}
-
-export function sortByDate(items){
-    return {
-        type: SORT_BY_DATE,
-        items
-    }
-}
-
-export function fetchNewsAsync(type='topstories'){
-
-    return function(dispatch) {
-        
-        dispatch(fetchNewsStart())
-        const url = `https://hacker-news.firebaseio.com/v0/${type}.json??query=test`; ///search_by_date?query=
-        fetch(url).
-        then(resp => resp.json()).
-        // then(data => data.slice(0,50)).
-        then(idArray => {
-            const requests = idArray.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`))
-            const result = Promise.all(requests).
-            then(responses => Promise.all(responses.map(resp => resp.json()))).
-            then(responses => responses.forEach(value => dispatch(newsSave(value)))).
-            then(data => dispatch(fetchNewsCompleted(data)))
-        });
-
-
-  
     }
 }
