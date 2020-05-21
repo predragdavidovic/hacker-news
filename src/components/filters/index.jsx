@@ -10,15 +10,14 @@ class Filters extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-
-    handleChange(selectOption, list){
+    handleChange(selectOption, list , currentPage){
         switch(selectOption){
             case 'popularity': {
-                this.props.sortByPopularity(list)
+                this.props.sortByPopularity(list, currentPage)
                 return;
             }
             case 'date': {
-                this.props.sortByDate(list)
+                this.props.sortByDate(list, currentPage)
                 return;
             }
             default: {
@@ -28,7 +27,7 @@ class Filters extends Component {
     }
 
     render(){
-        const {list} = this.props;
+        const {list, currentPage} = this.props;
         return(
             <div className="filter">
 
@@ -40,7 +39,7 @@ class Filters extends Component {
                 </select>
 
                 <label htmlFor="by"> by </label>
-                <select id="by" onChange={(event) => this.handleChange(event.currentTarget.value, list)}>
+                <select id="by" onChange={(event) => this.handleChange(event.currentTarget.value, list, currentPage)}>
                     <option value="popularity">Popularity</option>
                     <option value="date">Date</option>
                 </select>
@@ -60,14 +59,14 @@ class Filters extends Component {
 }
 
 function mapStateToProps(state){
-    const {list} = state.news;
-    return {list};
+    const {list, currentPage} = state.news;
+    return {list, currentPage};
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        sortByPopularity: item => dispatch(sortByPopularity(item)),
-        sortByDate: item => dispatch(sortByDate(item))
+        sortByPopularity: (items,currentPage) => dispatch(sortByPopularity(items, currentPage)),
+        sortByDate: (items,currentPage) => dispatch(sortByDate(items, currentPage))
     }
 }
 

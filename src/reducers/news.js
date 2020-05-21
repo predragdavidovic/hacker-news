@@ -24,6 +24,14 @@ const initial = {
 
 const numberOfItemsPerPage = 40;
 
+function sortItemsByType(action, type){
+    const {currentPage, items} = action;
+    const sorted = items[currentPage].sort((a,b)=>(b[type] - a[type]));
+    items[currentPage] = [];
+    items[currentPage] = sorted;
+    return items
+}
+
 const newsReducer = (state = initial, action) => {
     switch (action.type) {
         case FETCH_START: {
@@ -65,15 +73,14 @@ const newsReducer = (state = initial, action) => {
             }
         }
         case SORT_BY_POPULARITY: {
-            const sorted = action.items.sort((a,b)=>(b.score - a.score))
+            const sorted = sortItemsByType(action, 'score')
             return {
                 ...state,
                 list: sorted
             }
         }
-
         case SORT_BY_DATE: {
-            const sorted = action.items.sort((a,b)=>(b.time - a.time))
+            const sorted = sortItemsByType(action, 'time')
             return {
                 ...state,
                 list: sorted
