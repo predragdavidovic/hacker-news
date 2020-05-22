@@ -1,20 +1,10 @@
-export const FETCH_ALL_STORIES_IDS = 'FETCH_ALL_STORIES_IDS';
 export const FETCH_START = 'FETCH_START';
 export const NEWS_ITEM_SAVE = 'NEWS_ITEM_SAVE';
 export const FETCH_COMPLETED = 'FETCH_COMPLETED';
 export const SAVE_ALL_IDS = "SAVE_ALL_IDS";
-
 export const SAVE_VISITED_PAGE_NUMBER = "SAVE_VISITED_PAGE_NUMBER";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
-
 export const CLEAN_REDUCER = "CLEAN_REDUCER";
-
-fetchStart,
-saveAllIds,
-newsItemSave,
-fetchCompleted,
-setCurrentPage,
-saveVisitedPage
 
 export function fetchStart(){
     return {

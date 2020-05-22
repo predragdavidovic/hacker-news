@@ -62,7 +62,6 @@ const mapDispatchToProps = dispatch => {
     return {
         sortByPopularity: (items,currentPage) => dispatch(sortByPopularity(items, currentPage)),
         sortByDate: (items,currentPage) => dispatch(sortByDate(items, currentPage)),
-        
         fetchAllStoriesIdsAsync: (type) => dispatch(fetchAllStoriesIdsAsync(type))
     }
 }
