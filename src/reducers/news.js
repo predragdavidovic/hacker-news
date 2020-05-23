@@ -1,13 +1,8 @@
-import chunk from 'lodash.chunk';
-
 import {
     FETCH_START,
     NEWS_ITEM_SAVE,
     FETCH_COMPLETED,
-    SAVE_ALL_IDS,
-    SAVE_VISITED_PAGE_NUMBER,
     SET_CURRENT_PAGE,
-    CLEAN_REDUCER,
 } from '../actions/index.js'
 
 import {
@@ -19,11 +14,10 @@ const initial = {
     list: [],
     newsIds: [],
     currentPage: null,
-    pageNumbers: [0],
-    isFetching: false
+    visitedPages: [0],
+    isFetching: false,
+    nbPages: []
 }
-
-const numberOfItemsPerPage = 40;
 
 function sortItemsByType(action, type){
     const {currentPage, items} = action;
@@ -41,20 +35,6 @@ const newsReducer = (state = initial, action) => {
                 isFetching: true
             }
         }
-        case SAVE_VISITED_PAGE_NUMBER: {
-            return {
-                ...state,
-                pageNumbers: [...state.pageNumbers, action.numPage]
-            }
-        }
-
-        case SAVE_ALL_IDS: {
-            const idChunks = chunk(action.ids, numberOfItemsPerPage)
-            return {
-                ...state,
-                newsIds: idChunks
-            }
-        }
         case SET_CURRENT_PAGE: {
             return {
                 ...state,
@@ -62,9 +42,12 @@ const newsReducer = (state = initial, action) => {
             }
         }
         case NEWS_ITEM_SAVE: {
+            const {newsItem, newsItem: {page, nbPages}} = action
             return {
                 ...state,
-                list: { ...state.list, [action.page] : action.newsItem}
+                list: { ...state.list, [page]: newsItem},
+                nbPages,
+                visitedPages: [...state.visitedPages, page]
             }
         }
         case FETCH_COMPLETED: {
@@ -86,9 +69,6 @@ const newsReducer = (state = initial, action) => {
                 ...state,
                 list: sorted
             }
-        }
-        case CLEAN_REDUCER: {
-            return initial
         }
         default: 
             return state

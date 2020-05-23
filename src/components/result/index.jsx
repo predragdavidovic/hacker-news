@@ -13,20 +13,13 @@ class Result extends Component {
         super(props);
     }
 
-    componentDidUpdate(prevProps){
-        const {newsIds, currentPage, isFatching} = this.props;
-        if (prevProps.currentPage !== currentPage && !isFatching) {
-            window.scrollTo(0, 0)
-        }
-    }
-
     render(){ 
-        const {list, currentPage, isFetching} = this.props.news;
-        const currentPageItems = list && list[currentPage];
+        const {list, isFetching} = this.props.news;
+        const currentPageItems = list && list[this.props.currentPage];
         return (
             <div className="search_result">
             {
-               isFetching ? <Loader/> : currentPageItems && currentPageItems.map(item => Item(item))
+               isFetching ? <Loader/> : currentPageItems && currentPageItems.hits.map(item => Item(item))
             }
             </div>
         )
@@ -34,8 +27,8 @@ class Result extends Component {
 }
 
 function mapStateToProps(state){
-    const {news, news: {newsIds, currentPage, list}} = state;
-    return {news, currentPage, newsIds, list}
+    const {news, news: {newsIds, list}} = state;
+    return {news, newsIds, list}
 }
 
 export default connect(mapStateToProps, {fetchStoriesPerPageAsync})(Result);
