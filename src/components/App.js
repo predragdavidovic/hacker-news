@@ -6,7 +6,6 @@ import Filters from './filters/index.jsx';
 import Result from './result/index.jsx';
 import Pagination from './pagination/index.jsx';
 
-import {saveVisitedPage} from '../actions/index.js'
 import {fetchAllStoriesIdsAsync} from '../actions/network.js'
 
 import './style.css'
@@ -14,28 +13,47 @@ import './style.css'
 class App extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            currentPage: 1,
+        }
+        this.handleCurrentPage = this.handleCurrentPage.bind(this);
     }
 
     componentDidMount(){
         this.props.fetchAllStoriesIdsAsync();
     }
 
+    handleCurrentPage(currentPage){
+        const {visitedPages} = this.props;
+        this.setState({currentPage})
+
+        if (!visitedPages.includes(currentPage)) {
+            this.props.fetchAllStoriesIdsAsync(currentPage)
+            return;
+        }
+        window.scrollTo(0, 0)
+    }
+
     render(){
-        const pages = this.props.newsIds.map((item, index) => index);
+        const {currentPage} = this.state;
+
         return (
             <div className="container">
                 <Header/>
                 <Filters/>
-                <Result/>
-                <Pagination items={pages}/>
+                <Result currentPage={currentPage}/>
+                <Pagination 
+                    currentPage={currentPage}
+                    onPageChange={this.handleCurrentPage}
+                />
             </div>
         )
     }
 }
 
 function mapStateToProps(state){
-    const {newsIds} = state.news;
-    return {newsIds};
+    const {nbPages, visitedPages} = state.news;
+    return {nbPages, visitedPages};
 }
 
-export default connect(mapStateToProps, {fetchAllStoriesIdsAsync, saveVisitedPage})(App);
+export default connect(mapStateToProps, {fetchAllStoriesIdsAsync})(App);
