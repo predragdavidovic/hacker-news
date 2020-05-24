@@ -1,7 +1,18 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {fetchOnSearchAsync} from '../../actions/network.js'
 import './style/style.css';
 
 class Header extends Component {
+
+    constructor(props){
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(value){
+        this.props.onSearch(value)
+    }
 
     render(){
         return (
@@ -15,7 +26,10 @@ class Header extends Component {
                     <div className="header_search_element">
 
                     </div>
-                    <input type="text" placeholder="Search stories by title, url or author" />
+                    <input 
+                        type="text" 
+                        placeholder="Search stories by title, url or author" 
+                        onChange={(e) => this.handleChange(e.target.value)}/>
                 </div>
                 <div className="header_settings">
                     <div className="header_settings_image">
@@ -29,4 +43,13 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    const {searchType} = state.news;
+    return {searchType};
+}
+
+const mapDispatchToProps = dispatch => ({
+    fetchOnSearchAsync: (item) => dispatch(fetchOnSearchAsync(item))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

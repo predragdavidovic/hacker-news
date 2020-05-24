@@ -9,11 +9,16 @@ import {
     setCurrentPage,
 } from './index.js'
 
+import {
+    searchStart,
+    searchItemSave,
+    searchCompleted
+} from './search.js'
+
 export function fetchAllStoriesIdsAsync({searchType="comment", searchBy= "", searchFor="", currentPage = 1}) {
 
     const searchForValue = sortByTime(searchFor)
     const api = `http://hn.algolia.com/api/v1/search${searchBy}?tags=${searchType}${searchForValue}&page=${currentPage}`;
-    
     return function(dispatch) {
         dispatch(fetchStart())
         fetch(api).
@@ -21,5 +26,17 @@ export function fetchAllStoriesIdsAsync({searchType="comment", searchBy= "", sea
             then(item => dispatch(newsItemSave(item, currentPage, searchBy, searchType, searchFor))).
             then(data => dispatch(fetchCompleted(data))).
             then(() => dispatch(setCurrentPage(currentPage)))
+    }
+}
+
+export function fetchOnSearchAsync({searchType, value, currentPage = 1}) {
+
+    const api = `http://hn.algolia.com/api/v1/search?query=${value}&tags=${searchType}&page=1`
+    return function(dispatch){
+        dispatch(searchStart())
+        fetch(api).
+        then(response => response.json()).
+        then(item => dispatch(searchItemSave(item,searchType,currentPage))).
+        then(data => dispatch(searchCompleted(data)))
     }
 }

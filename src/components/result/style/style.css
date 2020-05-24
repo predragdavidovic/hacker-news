@@ -1,5 +1,6 @@
 .search_result {
-  background: #f6f6ef; }
+  background: #f6f6ef;
+  min-height: 80vh; }
 
 .search_result:last-child {
   padding-bottom: 10px; }
