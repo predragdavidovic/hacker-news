@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
 import Loader from '../loader/index.jsx';
 import Item from '../item/index.jsx';
-
-import {fetchStoriesPerPageAsync} from '../../actions/network.js'
-
+import {renderAppropriateList} from '../../utilites/index.js'
 import './style/style.css';
 
 class Result extends Component {
@@ -14,8 +11,10 @@ class Result extends Component {
     }
 
     render(){ 
-        const {list, isFetching} = this.props.news;
+        const {isFetching, searchType, listStory, listComment} = this.props.news;
+        const list = renderAppropriateList(searchType, listStory, listComment)
         const currentPageItems = list && list[this.props.currentPage];
+
         return (
             <div className="search_result">
             {
@@ -27,8 +26,8 @@ class Result extends Component {
 }
 
 function mapStateToProps(state){
-    const {news, news: {newsIds, list}} = state;
-    return {news, newsIds, list}
+    const {news, news: {listStory, listComment, searchType}} = state;
+    return {news, listStory, listComment, searchType}
 }
 
-export default connect(mapStateToProps, {fetchStoriesPerPageAsync})(Result);
+export default connect(mapStateToProps, null)(Result);

@@ -5,8 +5,10 @@ import './style/style.css'
 function Item(item) {
     const shortDate = item.created_at.substring(0,10);
     const parser = new DOMParser();
-    const htmlDoc = parser.parseFromString(item.comment_text, 'text/html');
-    return(
+    const htmlDoc = parser.parseFromString(item.comment_text || item.title, 'text/html');
+    const title = item.title || item.story_text || item.story_title;
+    
+    return (
         <article className="Story" key={item.id}>
             <div className="Story_container">
                 <div className="Story_data">
@@ -32,7 +34,7 @@ function Item(item) {
                         <span className="Story_separator">|</span>
                         <span className="Story_link">on: 
                             <a href={item.url}>
-                                <span>{item.story_title}</span>
+                                <span>{title}</span>
                             </a>
                         </span>
                         <div className="Story_comment">

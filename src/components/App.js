@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
 import Header from './header/index.jsx';
 import Filters from './filters/index.jsx';
 import Result from './result/index.jsx';
 import Pagination from './pagination/index.jsx';
-
+import {renderAppropriateList} from '../utilites/index.js'
 import {fetchAllStoriesIdsAsync} from '../actions/network.js'
-
 import './style.css'
 
 class App extends Component {
@@ -20,17 +18,19 @@ class App extends Component {
     }
 
     componentDidMount(){
-        this.props.fetchAllStoriesIdsAsync();
+        this.props.fetchAllStoriesIdsAsync({});
     }
 
     handleCurrentPage(currentPage){
-        const {visitedPages} = this.props;
-        this.setState({currentPage})
-
-        if (!visitedPages.includes(currentPage)) {
-            this.props.fetchAllStoriesIdsAsync(currentPage)
+        const {visitedStory, visitedComment, searchType, searchBy } = this.props;
+        let list = renderAppropriateList(searchType, visitedStory, visitedComment) 
+         this.setState({currentPage})
+       
+        if (!list.includes(currentPage)) {
+            this.props.fetchAllStoriesIdsAsync({currentPage, searchType, searchBy})
             return;
         }
+
         window.scrollTo(0, 0)
     }
 
@@ -52,8 +52,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state){
-    const {nbPages, visitedPages} = state.news;
-    return {nbPages, visitedPages};
+    const {visitedComment, visitedStory, searchType, searchBy} = state.news;
+    return {visitedComment, visitedStory, searchType, searchBy};
 }
 
 export default connect(mapStateToProps, {fetchAllStoriesIdsAsync})(App);

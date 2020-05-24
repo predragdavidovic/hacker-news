@@ -24,10 +24,23 @@ export function setCurrentPage(currentPage){
     }
 }
 
-export function newsItemSave(item, pageNumber){
+export function newsItemSave(
+    item, 
+    pageNumber, 
+    searchBy, 
+    searchType, 
+    visitedAll=[], 
+    visitedComments=[],
+    visitedStories=[]
+    ) { 
     return {
         type: NEWS_ITEM_SAVE,
         page: pageNumber,
-        newsItem: item
+        newsItem: item,
+        searchBy,
+        searchType,
+        visitedComments,
+        visitedAll,
+        visitedStories
     }
 }
