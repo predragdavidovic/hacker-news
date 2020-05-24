@@ -1,36 +1,21 @@
-import chunk from 'lodash.chunk';
+import {upperFirstLatter} from '../utilites/index.js'
 
 import {
     FETCH_START,
     NEWS_ITEM_SAVE,
     FETCH_COMPLETED,
-    SAVE_ALL_IDS,
-    SAVE_VISITED_PAGE_NUMBER,
     SET_CURRENT_PAGE,
-    CLEAN_REDUCER,
 } from '../actions/index.js'
 
-import {
-    SORT_BY_POPULARITY,
-    SORT_BY_DATE,
-} from '../actions/sort.js'
 
 const initial = {
-    list: [],
-    newsIds: [],
     currentPage: null,
-    pageNumbers: [0],
-    isFetching: false
-}
-
-const numberOfItemsPerPage = 40;
-
-function sortItemsByType(action, type){
-    const {currentPage, items} = action;
-    const sorted = items[currentPage].sort((a,b)=>(b[type] - a[type]));
-    items[currentPage] = [];
-    items[currentPage] = sorted;
-    return items
+    isFetching: false,
+    visitedStory: [],
+    visitedComment: [],
+    nbPages: [],
+    listStory: [],
+    listComment: [],
 }
 
 const newsReducer = (state = initial, action) => {
@@ -41,20 +26,6 @@ const newsReducer = (state = initial, action) => {
                 isFetching: true
             }
         }
-        case SAVE_VISITED_PAGE_NUMBER: {
-            return {
-                ...state,
-                pageNumbers: [...state.pageNumbers, action.numPage]
-            }
-        }
-
-        case SAVE_ALL_IDS: {
-            const idChunks = chunk(action.ids, numberOfItemsPerPage)
-            return {
-                ...state,
-                newsIds: idChunks
-            }
-        }
         case SET_CURRENT_PAGE: {
             return {
                 ...state,
@@ -62,9 +33,18 @@ const newsReducer = (state = initial, action) => {
             }
         }
         case NEWS_ITEM_SAVE: {
+            const {newsItem, newsItem: {page, nbPages}, searchBy, searchType} = action
+            const upperSearchType = upperFirstLatter(searchType);
+            const visitedType = ['visited' + upperSearchType];
+            const list = ['list' + upperSearchType]
+
             return {
                 ...state,
-                list: { ...state.list, [action.page] : action.newsItem}
+                nbPages,
+                searchType,
+                searchBy,
+                [list]: { ...state[list], [page]: newsItem},
+                [visitedType]: [...state[visitedType], page],
             }
         }
         case FETCH_COMPLETED: {
@@ -72,23 +52,6 @@ const newsReducer = (state = initial, action) => {
                 ...state,
                 isFetching: false
             }
-        }
-        case SORT_BY_POPULARITY: {
-            const sorted = sortItemsByType(action, 'score')
-            return {
-                ...state,
-                list: sorted
-            }
-        }
-        case SORT_BY_DATE: {
-            const sorted = sortItemsByType(action, 'time')
-            return {
-                ...state,
-                list: sorted
-            }
-        }
-        case CLEAN_REDUCER: {
-            return initial
         }
         default: 
             return state

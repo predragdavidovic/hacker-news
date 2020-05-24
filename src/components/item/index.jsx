@@ -1,18 +1,20 @@
 import React from 'react';
-import moment from 'moment'
+// import moment from 'moment'
 import './style/style.css'
 
 function Item(item) {
-        const dateArray = [];
-        const date = new Date(item.time*1000);
-        dateArray.push(date.getFullYear(), date.getMonth(), date.getDate());
-    return(
+    const shortDate = item.created_at.substring(0,10);
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(item.comment_text || item.title, 'text/html');
+    const title = item.title || item.story_text || item.story_title;
+    
+    return (
         <article className="Story" key={item.id}>
             <div className="Story_container">
                 <div className="Story_data">
                     <div className="Story_meta">
                         <span>
-                            <a href={item.url}>{item.score} points</a>
+                            <a href={item.url}>{item.points} points</a>
                         </span>,
                         <span className="Story_separator">|
                         </span>
@@ -23,7 +25,7 @@ function Item(item) {
                         </span>
                         <span className="Story_separator">|</span>
                         <span>
-                            <a href={item.url}>{moment(dateArray).fromNow(true)}</a>
+                            <a href={item.url}>{shortDate}</a>
                         </span>
                         <span className="Story_separator">|</span>
                         <span className="Story_link">
@@ -32,15 +34,12 @@ function Item(item) {
                         <span className="Story_separator">|</span>
                         <span className="Story_link">on: 
                             <a href={item.url}>
-                                <span>{item.by}</span>
+                                <span>{title}</span>
                             </a>
                         </span>
                         <div className="Story_comment">
-                            <span>
-                                <p>
-                                    {item.title}
-                                </p>
-                            </span>
+                            <div dangerouslySetInnerHTML={{__html: htmlDoc.body.innerHTML}}>
+                            </div>
                         </div>
                     </div>
                 </div>

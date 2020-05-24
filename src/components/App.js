@@ -1,41 +1,59 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
 import Header from './header/index.jsx';
 import Filters from './filters/index.jsx';
 import Result from './result/index.jsx';
 import Pagination from './pagination/index.jsx';
-
-import {saveVisitedPage} from '../actions/index.js'
+import {renderAppropriateList} from '../utilites/index.js'
 import {fetchAllStoriesIdsAsync} from '../actions/network.js'
-
 import './style.css'
 
 class App extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            currentPage: 1,
+        }
+        this.handleCurrentPage = this.handleCurrentPage.bind(this);
     }
 
     componentDidMount(){
-        this.props.fetchAllStoriesIdsAsync();
+        this.props.fetchAllStoriesIdsAsync({});
+    }
+
+    handleCurrentPage(currentPage){
+        const {visitedStory, visitedComment, searchType, searchBy } = this.props;
+        let list = renderAppropriateList(searchType, visitedStory, visitedComment) 
+         this.setState({currentPage})
+       
+        if (!list.includes(currentPage)) {
+            this.props.fetchAllStoriesIdsAsync({currentPage, searchType, searchBy})
+            return;
+        }
+
+        window.scrollTo(0, 0)
     }
 
     render(){
-        const pages = this.props.newsIds.map((item, index) => index);
+        const {currentPage} = this.state;
+
         return (
             <div className="container">
                 <Header/>
                 <Filters/>
-                <Result/>
-                <Pagination items={pages}/>
+                <Result currentPage={currentPage}/>
+                <Pagination 
+                    currentPage={currentPage}
+                    onPageChange={this.handleCurrentPage}
+                />
             </div>
         )
     }
 }
 
 function mapStateToProps(state){
-    const {newsIds} = state.news;
-    return {newsIds};
+    const {visitedComment, visitedStory, searchType, searchBy} = state.news;
+    return {visitedComment, visitedStory, searchType, searchBy};
 }
 
-export default connect(mapStateToProps, {fetchAllStoriesIdsAsync, saveVisitedPage})(App);
+export default connect(mapStateToProps, {fetchAllStoriesIdsAsync})(App);
