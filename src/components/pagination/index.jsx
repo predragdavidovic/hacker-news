@@ -42,22 +42,26 @@ function paginationStructure(pages, currentPage, nbPages) {
     return pagination;
 }
 
+function renderPagination(visiblePages, currentPage, onPageChange, nbPages){
+    return visiblePages.map((item,index) => {
+        const selected = currentPage == item ? 'pagination_item_selected' : "";
+        return (
+            <span className={`pagination_item ${selected}`} key={index}
+                onClick={() => handleClick(item, onPageChange, nbPages)}>
+                {item}
+            </span>
+        )
+    })
+}
 
-function Pagination({ isFetching, currentPage, onPageChange, nbPages}) {
+function Pagination({ isFetching, currentPage, onPageChange, nbPages, showSettings}) {
     const pages = Array.from({length: nbPages}, (v, i) => i + 1)
     const visiblePages = paginationStructure(pages, currentPage, nbPages);
+    const pagination = !showSettings ? renderPagination(visiblePages, currentPage, onPageChange, nbPages) : "";
     return (
         <div className="pagination">
             {
-               !isFetching ? visiblePages.map((item,index) => {
-                   const selected = currentPage == item ? 'pagination_item_selected' : "";
-                   return (
-                        <span className={`pagination_item ${selected}`} key={index}
-                            onClick={() => handleClick(item, onPageChange, nbPages)}>
-                            {item}
-                        </span>
-                   )
-               }) : ""
+               !isFetching ?  pagination : ""
             }
         </div>
     )

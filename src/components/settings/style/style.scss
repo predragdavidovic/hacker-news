@@ -1,0 +1,44 @@
+.settings {
+    &_container {
+        p {
+            font-size: 12px;
+            padding: 0 8px;
+            height: 40px
+        }
+        &_display {
+            height: 100px
+        }
+        &_ranking {
+            height: 200px;
+        }
+        &_heading {
+            color: #5c5c5c;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+        &_content {
+            color: #5c5c5c;
+            font-size: 14px;
+            text-align: center;
+            padding-top: 15px;
+            div {
+                margin-bottom: 16px;
+            }
+        }
+        &_button { 
+            display: flex;
+            justify-content: flex-end;
+            span {
+                padding: 8px 16px;
+                border: 0 solid #ccc;
+                border-radius: 4px;
+                color: #fff;
+                background-color: #ff742b;
+                margin-right: 20px;
+            }
+            span:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

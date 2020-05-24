@@ -1,0 +1,36 @@
+.settings_container p {
+  font-size: 12px;
+  padding: 0 8px;
+  height: 40px; }
+
+.settings_container_display {
+  height: 100px; }
+
+.settings_container_ranking {
+  height: 200px; }
+
+.settings_container_heading {
+  color: #5c5c5c;
+  font-size: 16px;
+  margin-bottom: 24px; }
+
+.settings_container_content {
+  color: #5c5c5c;
+  font-size: 14px;
+  text-align: center;
+  padding-top: 15px; }
+  .settings_container_content div {
+    margin-bottom: 16px; }
+
+.settings_container_button {
+  display: flex;
+  justify-content: flex-end; }
+  .settings_container_button span {
+    padding: 8px 16px;
+    border: 0 solid #ccc;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #ff742b;
+    margin-right: 20px; }
+  .settings_container_button span:hover {
+    cursor: pointer; }

@@ -13,9 +13,8 @@ class Filters extends Component {
         this.props.fetchAllStoriesIdsAsync(type)
     }
 
-    render(){
-        const {currentPage, searchBy, searchFor, searchType} = this.props;
-        return(
+    renderFilters(currentPage, searchBy, searchFor, searchType){
+        return (
             <div className="filter">
                 <label htmlFor="search"> Search </label>
                 <select id="search" onChange={(e) => this.handleSearchChange({searchType: e.currentTarget.value, currentPage, searchBy, searchFor})}>
@@ -39,6 +38,12 @@ class Filters extends Component {
                 </select>
             </div>
         )
+    }
+
+    render(){
+        const {currentPage, searchBy, searchFor, searchType, showSettings} = this.props;
+        const filters = this.renderFilters(currentPage, searchBy, searchFor, searchType);
+        return !showSettings ? filters : "";
     }
 }
 

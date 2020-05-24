@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Loader from '../loader/index.jsx';
 import Item from '../item/index.jsx';
+import Settings from '../settings/index.jsx'
 import {renderAppropriateList} from '../../utilites/index.js'
 import './style/style.css';
 
@@ -17,22 +18,21 @@ class Result extends Component {
 
 
     renderList(){
-        const {currentPage, searchValue} = this.props;
+        const {currentPage, searchValue, showSettings} = this.props;
         const {isFetching, searchType, listStory, listComment} = this.props.news;
         const {isFetching: isFetchingSearch, list: searchList} = this.props.search;
         const list = renderAppropriateList(searchType, listStory, listComment);
         let displaySearchList;
-        
         const displayList = isFetching ? <Loader/> : this.renderListType(list, currentPage) 
-        
         
         if (searchValue && isFetchingSearch) {
             displaySearchList = <Loader/>
         } else if (searchValue && !isFetchingSearch) {
             displaySearchList = this.renderListType(searchList, currentPage)
         }
-
+       const displaySettings = showSettings && <Settings />
         return {
+            displaySettings,
             displayList,
             displaySearchList
         }
@@ -42,7 +42,7 @@ class Result extends Component {
         const renderList = this.renderList();
         return (
             <div className="search_result">
-                { renderList.displaySearchList || renderList.displayList }
+                { renderList.displaySettings || renderList.displaySearchList || renderList.displayList }
             </div>
         )
     }

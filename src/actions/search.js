@@ -1,6 +1,7 @@
 export const START_SEARCH = 'SEARCH_START';
 export const SEARCH_ITEM_SAVE = 'SEARCH_ITEM_SAVE';
 export const SEARCH_COMPLETED = 'SEARCH_COMPLETED';
+export const SEARCH_SETTINGS = 'SEARCH_SETTINGS';
 
 export function searchStart(){
     return {
@@ -19,12 +20,21 @@ export function searchCompleted() {
 export function searchItemSave(
     item, 
     pageNumber,
-    currentPage, 
+    currentPage,
+    hitsPerPage,
     ) { 
     return {
         type: SEARCH_ITEM_SAVE,
         page: pageNumber,
         searchItem: item,
         currentPage,
+        hitsPerPage
+    }
+}
+
+export function searchSettings(hitsPerPage) {
+    return {
+        type: SEARCH_SETTINGS,
+        hitsPerPage
     }
 }

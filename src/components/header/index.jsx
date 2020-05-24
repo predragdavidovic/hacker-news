@@ -14,7 +14,24 @@ class Header extends Component {
         this.props.onSearch(value)
     }
 
+    renderSettingsElement(showSettings){ 
+        const settingsElement = (
+            <div className="header_settings" onClick={() => this.props.onSettings()}>
+                <div className="header_settings_image">
+                </div>    
+                <div className="header_settings_text">
+                    Settings
+                </div>
+            </div>
+        )
+        const backElement = <span className="header_settings_back" onClick={() => this.props.onSettings()}>{'< Back'}</span>
+        
+        return !showSettings ? settingsElement : backElement
+    }
+
     render(){
+        const {showSettings} = this.props;
+        const hideSearch =  showSettings ? 'header_search_hide' : "";
         return (
             <div className="header">
                 <div className="header_logo">
@@ -22,7 +39,7 @@ class Header extends Component {
                 <div className="header_name">
                     Search <br/> Hacker News
                 </div>
-                <div className="header_search">
+                <div className={`header_search ${hideSearch}`}>
                     <div className="header_search_element">
 
                     </div>
@@ -31,13 +48,7 @@ class Header extends Component {
                         placeholder="Search stories by title, url or author" 
                         onChange={(e) => this.handleChange(e.target.value)}/>
                 </div>
-                <div className="header_settings">
-                    <div className="header_settings_image">
-                    </div>    
-                    <div className="header_settings_text">
-                        Settings
-                    </div>
-                </div>
+                {this.renderSettingsElement(showSettings)}
             </div>
         )
     }
