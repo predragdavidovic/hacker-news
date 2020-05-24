@@ -33,7 +33,7 @@ const newsReducer = (state = initial, action) => {
             }
         }
         case NEWS_ITEM_SAVE: {
-            const {newsItem, newsItem: {page, nbPages}, searchBy, searchType} = action
+            const {newsItem, newsItem: {page, nbPages}, searchBy, searchType, searchForValue} = action
             const upperSearchType = upperFirstLatter(searchType);
             const visitedType = ['visited' + upperSearchType];
             const list = ['list' + upperSearchType]
@@ -43,6 +43,7 @@ const newsReducer = (state = initial, action) => {
                 nbPages,
                 searchType,
                 searchBy,
+                searchFor: searchForValue,
                 [list]: { ...state[list], [page]: newsItem},
                 [visitedType]: [...state[visitedType], page],
             }

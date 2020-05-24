@@ -28,7 +28,8 @@ export function newsItemSave(
     item, 
     pageNumber, 
     searchBy, 
-    searchType, 
+    searchType,
+    searchForValue,
     visitedAll=[], 
     visitedComments=[],
     visitedStories=[]
@@ -39,6 +40,7 @@ export function newsItemSave(
         newsItem: item,
         searchBy,
         searchType,
+        searchForValue,
         visitedComments,
         visitedAll,
         visitedStories

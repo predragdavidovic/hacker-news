@@ -22,12 +22,12 @@ class App extends Component {
     }
 
     handleCurrentPage(currentPage){
-        const {visitedStory, visitedComment, searchType, searchBy } = this.props;
+        const {visitedStory, visitedComment, searchType, searchBy, searchFor } = this.props;
         let list = renderAppropriateList(searchType, visitedStory, visitedComment) 
          this.setState({currentPage})
        
         if (!list.includes(currentPage)) {
-            this.props.fetchAllStoriesIdsAsync({currentPage, searchType, searchBy})
+            this.props.fetchAllStoriesIdsAsync({currentPage, searchType, searchBy, searchFor})
             return;
         }
 
@@ -52,8 +52,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state){
-    const {visitedComment, visitedStory, searchType, searchBy} = state.news;
-    return {visitedComment, visitedStory, searchType, searchBy};
+    const {visitedComment, visitedStory, searchType, searchBy, searchFor} = state.news;
+    return {visitedComment, visitedStory, searchType, searchBy, searchFor};
 }
 
 export default connect(mapStateToProps, {fetchAllStoriesIdsAsync})(App);
