@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-
 import './style/style.css'
 
 function handleClick(item, onPageChange, nbPages) {
@@ -47,7 +46,6 @@ function paginationStructure(pages, currentPage, nbPages) {
 function Pagination({ isFetching, currentPage, onPageChange, nbPages}) {
     const pages = Array.from({length: nbPages}, (v, i) => i + 1)
     const visiblePages = paginationStructure(pages, currentPage, nbPages);
-    console.log(visiblePages)
     return (
         <div className="pagination">
             {

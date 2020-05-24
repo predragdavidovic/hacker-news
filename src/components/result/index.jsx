@@ -10,24 +10,47 @@ class Result extends Component {
         super(props);
     }
 
-    render(){ 
-        const {isFetching, searchType, listStory, listComment} = this.props.news;
-        const list = renderAppropriateList(searchType, listStory, listComment)
-        const currentPageItems = list && list[this.props.currentPage];
+    renderListType(list, currentPage) {
+        const currentPageItems = list && list[currentPage];
+        return currentPageItems && currentPageItems.hits.map((item,index) => <span key={index}>{Item(item)}</span>)
+    }
 
+
+    renderList(){
+        const {currentPage, searchValue} = this.props;
+        const {isFetching, searchType, listStory, listComment} = this.props.news;
+        const {isFetching: isFetchingSearch, list: searchList} = this.props.search;
+        const list = renderAppropriateList(searchType, listStory, listComment);
+        let displaySearchList;
+        
+        const displayList = isFetching ? <Loader/> : this.renderListType(list, currentPage) 
+        
+        
+        if (searchValue && isFetchingSearch) {
+            displaySearchList = <Loader/>
+        } else if (searchValue && !isFetchingSearch) {
+            displaySearchList = this.renderListType(searchList, currentPage)
+        }
+
+        return {
+            displayList,
+            displaySearchList
+        }
+    }
+
+    render(){ 
+        const renderList = this.renderList();
         return (
             <div className="search_result">
-            {
-               isFetching ? <Loader/> : currentPageItems && currentPageItems.hits.map(item => Item(item))
-            }
+                { renderList.displaySearchList || renderList.displayList }
             </div>
         )
     }
 }
 
-function mapStateToProps(state){
-    const {news, news: {listStory, listComment, searchType}} = state;
-    return {news, listStory, listComment, searchType}
+const mapStateToProps = (state) => {
+    const {news, news: {listStory, listComment, searchType}, search} = state;
+    return {news, listStory, listComment, searchType, search}
 }
 
 export default connect(mapStateToProps, null)(Result);

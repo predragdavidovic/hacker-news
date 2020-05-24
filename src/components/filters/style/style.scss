@@ -2,10 +2,20 @@
 .filter {
     display: flex;
     align-items: center;
-    height: 30px;
+    height: 50px;
     background: #f6f6ef;
     font-size: 12px;
     label {
         margin: 0 10px;
+    }
+    select {
+        font-size: 14px;
+        padding: 0 4px 0 8px;
+        border: 1px solid #c3c3c3;
+        border-radius: 2px;
+        cursor: pointer;
+        color: #5c5c5c;
+        height: 28px;
+        background: #f6f6ef;
     }
 }
