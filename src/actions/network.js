@@ -29,14 +29,14 @@ export function fetchAllStoriesIdsAsync({searchType="comment", searchBy= "", sea
     }
 }
 
-export function fetchOnSearchAsync({searchType, value, currentPage = 1}) {
+export function fetchOnSearchAsync({searchType, value, currentPage = 1, hitsPerPage}) {
 
-    const api = `http://hn.algolia.com/api/v1/search?query=${value}&tags=${searchType}&page=1`
+    const api = `http://hn.algolia.com/api/v1/search?query=${value}&tags=${searchType}&page=1&hitsPerPage=${hitsPerPage}`
     return function(dispatch){
         dispatch(searchStart())
         fetch(api).
         then(response => response.json()).
-        then(item => dispatch(searchItemSave(item,searchType,currentPage))).
+        then(item => dispatch(searchItemSave(item,searchType,currentPage, hitsPerPage))).
         then(data => dispatch(searchCompleted(data)))
     }
 }

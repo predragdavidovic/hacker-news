@@ -38,6 +38,9 @@
         input:focus {
             outline: none;
         }
+        &_hide {
+            visibility: hidden;
+        }
     }
     &_settings {
         display: flex;
@@ -50,5 +53,14 @@
             width: 35px;
             margin: 0 5px;
         }
+        &_back {
+            padding-right: 10px;
+        }
+        &_back:hover {
+            cursor: pointer;
+        }
+    }
+    &_settings:hover {
+        cursor: pointer;
     }
 }

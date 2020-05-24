@@ -14,9 +14,11 @@ class App extends Component {
         this.state = {
             currentPage: 1,
             searchValue: "",
+            showSettings: false,
         }
         this.handleCurrentPage = this.handleCurrentPage.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleSettings = this.handleSettings.bind(this);
     }
 
     componentDidMount(){
@@ -31,13 +33,17 @@ class App extends Component {
         }
     }
 
+    handleSettings(){
+        this.setState({showSettings: !this.state.showSettings})
+    }
+
     handleCurrentPage(currentPage){
-        const {visitedStory, visitedComment, searchType, searchBy, searchFor } = this.props;
+        const {visitedStory, visitedComment, searchType, searchBy, searchFor, hitsPerPage} = this.props;
         let list = renderAppropriateList(searchType, visitedStory, visitedComment) 
          this.setState({currentPage})
        
         if (this.state.searchValue) {
-            this.props.fetchOnSearchAsync({currentPage, searchType, value: this.state.searchValue})
+            this.props.fetchOnSearchAsync({currentPage, searchType, value: this.state.searchValue, hitsPerPage})
             window.scrollTo(0, 0);
             return;   
         }
@@ -52,27 +58,32 @@ class App extends Component {
 
     handleSearch(value) {
         const {currentPage} =this.state;
-        const {searchType} = this.props;
+        const {searchType, hitsPerPage} = this.props;
         this.setState({searchValue: value})
-        this.props.fetchOnSearchAsync({currentPage, searchType, value})
+        this.props.fetchOnSearchAsync({currentPage, searchType, value, hitsPerPage})
     }
 
     render(){
-        const {currentPage} = this.state;
-
+        const {currentPage, showSettings} = this.state;
         return (
             <div className="container">
                 <Header 
                     onSearch={this.handleSearch}
+                    onSettings={this.handleSettings}
+                    showSettings={showSettings}
                     />
-                <Filters/>
+                <Filters
+                    showSettings={showSettings}
+                />
                 <Result 
                     currentPage={currentPage}
                     searchValue={this.state.searchValue}
+                    showSettings={showSettings}
                     />
                 <Pagination 
                     currentPage={currentPage}
                     onPageChange={this.handleCurrentPage}
+                    showSettings={showSettings}
                 />
             </div>
         )
@@ -81,7 +92,8 @@ class App extends Component {
 
 function mapStateToProps(state){
     const {visitedComment, visitedStory, searchType, searchBy, searchFor} = state.news;
-    return {visitedComment, visitedStory, searchType, searchBy, searchFor};
+    const {hitsPerPage} = state.search;
+    return {visitedComment, visitedStory, searchType, searchBy, searchFor, hitsPerPage};
 }
 
 export default connect(mapStateToProps, {fetchAllStoriesIdsAsync, fetchOnSearchAsync})(App);
