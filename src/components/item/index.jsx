@@ -1,5 +1,4 @@
 import React from 'react';
-// import moment from 'moment'
 import './style/style.css'
 
 function Item(item) {
@@ -16,8 +15,7 @@ function Item(item) {
                         <span>
                             <a href={item.url}>{item.points} points</a>
                         </span>,
-                        <span className="Story_separator">|
-                        </span>
+                        <span className="Story_separator">|</span>
                         <span>
                             <a href={item.url}>
                                 <span>pg</span>
@@ -38,8 +36,7 @@ function Item(item) {
                             </a>
                         </span>
                         <div className="Story_comment">
-                            <div dangerouslySetInnerHTML={{__html: htmlDoc.body.innerHTML}}>
-                            </div>
+                            <div dangerouslySetInnerHTML={{__html: htmlDoc.body.innerHTML}}></div>
                         </div>
                     </div>
                 </div>

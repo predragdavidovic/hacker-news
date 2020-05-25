@@ -16,7 +16,6 @@ class Result extends Component {
         return currentPageItems && currentPageItems.hits.map((item,index) => <span key={index}>{Item(item)}</span>)
     }
 
-
     renderList(){
         const {currentPage, searchValue, showSettings} = this.props;
         const {isFetching, searchType, listStory, listComment} = this.props.news;
@@ -31,10 +30,11 @@ class Result extends Component {
             displaySearchList = this.renderListType(searchList, currentPage)
         }
        const displaySettings = showSettings && <Settings />
+
         return {
             displaySettings,
-            displayList,
-            displaySearchList
+            displaySearchList,
+            displayList
         }
     }
 
@@ -48,7 +48,7 @@ class Result extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const {news, news: {listStory, listComment, searchType}, search} = state;
     return {news, listStory, listComment, searchType, search}
 }
