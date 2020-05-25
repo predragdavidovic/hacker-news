@@ -1,12 +1,10 @@
 import {upperFirstLatter} from '../utilites/index.js'
-
 import {
     FETCH_START,
     NEWS_ITEM_SAVE,
     FETCH_COMPLETED,
     SET_CURRENT_PAGE,
 } from '../actions/index.js'
-
 
 const initial = {
     currentPage: null,

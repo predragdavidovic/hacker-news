@@ -13,7 +13,8 @@ class Filters extends Component {
         this.props.fetchAllStoriesIdsAsync(type)
     }
 
-    renderFilters(currentPage, searchBy, searchFor, searchType){
+    renderFilters(){
+        const { currentPage, searchBy, searchFor, searchType } = this.props;
         return (
             <div className="filter">
                 <label htmlFor="search"> Search </label>
@@ -41,13 +42,11 @@ class Filters extends Component {
     }
 
     render(){
-        const {currentPage, searchBy, searchFor, searchType, showSettings} = this.props;
-        const filters = this.renderFilters(currentPage, searchBy, searchFor, searchType);
-        return !showSettings ? filters : "";
+        return !this.props.showSettings ? this.renderFilters() : "";
     }
 }
 
-function mapStateToProps(state){
+const mapStateToProps = state => {
     const {currentPage, searchType, searchBy, searchFor} = state.news;
     return {currentPage, searchType, searchBy, searchFor};
 }

@@ -54,20 +54,18 @@ function renderPagination(visiblePages, currentPage, onPageChange, nbPages){
     })
 }
 
-function Pagination({ isFetching, currentPage, onPageChange, nbPages, showSettings}) {
+function Pagination({isFetching, currentPage, onPageChange, nbPages, showSettings}) {
     const pages = Array.from({length: nbPages}, (v, i) => i + 1)
     const visiblePages = paginationStructure(pages, currentPage, nbPages);
     const pagination = !showSettings ? renderPagination(visiblePages, currentPage, onPageChange, nbPages) : "";
     return (
         <div className="pagination">
-            {
-               !isFetching ?  pagination : ""
-            }
+            {!isFetching ?  pagination : ""}
         </div>
     )
 }
 
-function mapStateToProps(state){
+const mapStateToProps = state => {
     const {isFetching, nbPages} = state.news;
     return {isFetching, nbPages};
 }

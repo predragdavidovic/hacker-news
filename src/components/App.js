@@ -90,7 +90,7 @@ class App extends Component {
     }
 }
 
-function mapStateToProps(state){
+const mapStateToProps = state => {
     const {visitedComment, visitedStory, searchType, searchBy, searchFor} = state.news;
     const {hitsPerPage} = state.search;
     return {visitedComment, visitedStory, searchType, searchBy, searchFor, hitsPerPage};

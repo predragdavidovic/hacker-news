@@ -1,19 +1,15 @@
-import {
-    sortByTime
-} from '../utilites/index.js';
-
+import {sortByTime} from '../utilites/index.js';
 import {
     fetchStart,
     newsItemSave,
     fetchCompleted,
     setCurrentPage,
-} from './index.js'
-
+} from './index.js';
 import {
     searchStart,
     searchItemSave,
     searchCompleted
-} from './search.js'
+} from './search.js';
 
 export function fetchAllStoriesIdsAsync({searchType="comment", searchBy= "", searchFor="", currentPage = 1}) {
 
