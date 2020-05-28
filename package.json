@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --open",
-    "scss": "node-sass --watch src -o src",
-    "start": "node-sass src -o src && webpack-dev-server --open"
+    "start": "node-sass src -o src && NODE_ENV=development webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "Predrag Davidovic",
   "license": "ISC",
@@ -27,7 +27,8 @@
     "node-sass": "^4.14.1",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "react": "^16.13.1",

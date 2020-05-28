@@ -1,15 +1,16 @@
+/* global PROF  */
+
+const path = require('path');
+var webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: './src/main.js',
-    mode: 'development',
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',
-        hot: true
-    },
     plugins: [
+        new webpack.DefinePlugin({
+            ENV: JSON.stringify(process.env.NODE_ENV)
+        }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Output Managment',
@@ -39,22 +40,26 @@ module.exports = {
             },
             {
                 test: /\.(js|jsx)$/,
-                loader: "babel-loader",
-                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        cacheDirectory: true
+                    },
+                },
+                exclude: '/node_modules/',
             },
             {
                 test: /\.js$/,
-                loader: 'eslint-loader',
                 exclude: /node_modules/,
+                loader: 'eslint-loader',
+                options: {
+                    cache: true,
+                  },
               },
         ],
     },
     output: {
         filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist')
     },
-    optimization: {
-        splitChunks: {
-            chunks: 'all'
-        }
-    }
 }
