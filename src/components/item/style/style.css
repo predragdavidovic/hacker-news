@@ -24,3 +24,8 @@
     -webkit-font-variant-ligatures: normal;
     font-variant-ligatures: normal;
     font-weight: 400; }
+    .Story_comment div em {
+      background: #ff0;
+      color: #000;
+      font-style: normal;
+      font-weight: 700; }

@@ -29,6 +29,14 @@
         -webkit-font-variant-ligatures: normal;
         font-variant-ligatures: normal;
         font-weight: 400;
+        div {
+            em {
+                background: #ff0;
+                color: #000;
+                font-style: normal;
+                font-weight: 700;
+            }
+        }
     }
 
 }

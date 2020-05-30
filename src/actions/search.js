@@ -19,13 +19,13 @@ export function searchCompleted() {
 
 export function searchItemSave(
     item, 
-    pageNumber,
+    searchType,
     currentPage,
     hitsPerPage,
     ) { 
     return {
         type: SEARCH_ITEM_SAVE,
-        page: pageNumber,
+        searchType,
         searchItem: item,
         currentPage,
         hitsPerPage
