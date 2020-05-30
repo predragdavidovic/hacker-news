@@ -40,7 +40,7 @@ class App extends Component {
     handleCurrentPage(currentPage){
         const {visitedStory, visitedComment, searchType, searchBy, searchFor, hitsPerPage} = this.props;
         let list = renderAppropriateList(searchType, visitedStory, visitedComment) 
-         this.setState({currentPage})
+        this.setState({currentPage})
        
         if (this.state.searchValue) {
             this.props.fetchOnSearchAsync({currentPage, searchType, value: this.state.searchValue, hitsPerPage})
@@ -64,7 +64,7 @@ class App extends Component {
     }
 
     render(){
-        const {currentPage, showSettings} = this.state;
+        const {currentPage, showSettings, searchValue} = this.state;
         return (
             <div className="container">
                 <Header 
@@ -74,10 +74,11 @@ class App extends Component {
                     />
                 <Filters
                     showSettings={showSettings}
+                    searchValue={searchValue}
                 />
                 <Result 
                     currentPage={currentPage}
-                    searchValue={this.state.searchValue}
+                    searchValue={searchValue}
                     showSettings={showSettings}
                     />
                 <Pagination 
@@ -92,8 +93,9 @@ class App extends Component {
 
 const mapStateToProps = state => {
     const {visitedComment, visitedStory, searchType, searchBy, searchFor} = state.news;
+    const {searchType: sSearchType} = state.search;
     const {hitsPerPage} = state.search;
-    return {visitedComment, visitedStory, searchType, searchBy, searchFor, hitsPerPage};
+    return {visitedComment, visitedStory, searchType, sSearchType, searchBy, searchFor, hitsPerPage};
 }
 
 export default connect(mapStateToProps, {fetchAllStoriesIdsAsync, fetchOnSearchAsync})(App);

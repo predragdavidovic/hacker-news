@@ -8,8 +8,8 @@ import {
 const initial = {
     isFetching: false,
     list: {},
-    visited: [],
     hitsPerPage: 30,
+    searchType: "comment"
 }
 
 const search = (state = initial, action) => {
@@ -21,12 +21,12 @@ const search = (state = initial, action) => {
             }
         }
         case SEARCH_ITEM_SAVE: {
-            const {searchItem, searchItem: {page, nbPages}, currentPage, hitsPerPage} = action;
+            const {searchItem, searchType, searchItem: {nbPages}, currentPage, hitsPerPage} = action;
             return {
                 ...state,
+                searchType,
                 nbPages,
                 hitsPerPage,
-                visited: [...state.visited, page],
                 list: {...state.list, [currentPage]: searchItem}
             }
         }

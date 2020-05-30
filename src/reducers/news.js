@@ -14,6 +14,7 @@ const initial = {
     nbPages: [],
     listStory: [],
     listComment: [],
+    searchType: 'comment',
 }
 
 const newsReducer = (state = initial, action) => {

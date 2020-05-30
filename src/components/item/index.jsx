@@ -1,10 +1,18 @@
 import React from 'react';
 import './style/style.css'
 
-function Item(item) {
+function Item(item, searchValue, searchType) {
+    let htmlDoc;
     const shortDate = item.created_at.substring(0,10);
     const parser = new DOMParser();
-    const htmlDoc = parser.parseFromString(item.comment_text || item.title, 'text/html');
+    const textType = searchType === 'story' ? 'title' : 'comment_text';
+    if (!searchValue) {
+        htmlDoc = parser.parseFromString(item[textType], 'text/html');
+    } else {
+        const htmlDocItem = item && item._highlightResult && 
+            item._highlightResult[textType] && item._highlightResult[textType].value;
+        htmlDoc = parser.parseFromString(htmlDocItem, 'text/html')
+    }
     const title = item.title || item.story_text || item.story_title;
     
     return (

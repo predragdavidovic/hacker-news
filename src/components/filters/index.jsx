@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchAllStoriesIdsAsync} from '../../actions/network.js';
+import {fetchAllStoriesIdsAsync, fetchOnSearchAsync} from '../../actions/network.js';
 import './style/style.css'
 
 class Filters extends Component {
@@ -10,7 +10,13 @@ class Filters extends Component {
     }
     
     handleSearchChange(type){
-        this.props.fetchAllStoriesIdsAsync(type)
+        const {currentPage, searchValue, hitsPerPage} = this.props;
+        const {searchType} = type;
+        if (!searchValue) {
+            this.props.fetchAllStoriesIdsAsync(type)
+        } else {
+            this.props.fetchOnSearchAsync({searchType, value: searchValue, currentPage, hitsPerPage})
+        }
     }
 
     renderFilters(){
@@ -48,11 +54,13 @@ class Filters extends Component {
 
 const mapStateToProps = state => {
     const {currentPage, searchType, searchBy, searchFor} = state.news;
-    return {currentPage, searchType, searchBy, searchFor};
+    const {hitsPerPage} = state.search;
+    return {currentPage, searchType, searchBy, searchFor, hitsPerPage};
 }
 
 const mapDispatchToProps = dispatch => ({
-        fetchAllStoriesIdsAsync: (type) => dispatch(fetchAllStoriesIdsAsync(type))
+        fetchAllStoriesIdsAsync: (type) => dispatch(fetchAllStoriesIdsAsync(type)),
+        fetchOnSearchAsync: (type) => dispatch(fetchOnSearchAsync(type))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);
