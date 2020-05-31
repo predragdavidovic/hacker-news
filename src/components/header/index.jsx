@@ -29,7 +29,7 @@ class Header extends Component {
 
     render(){
         const {showSettings} = this.props;
-        const hideSearch =  showSettings ? 'header_search_hide' : "";
+        const hideSearch = showSettings ? 'header_search_hide' : "";
         return (
             <div className="header">
                 <div className="header_logo"></div>

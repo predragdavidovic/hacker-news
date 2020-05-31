@@ -14,7 +14,8 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Output Managment',
-            template: './src/template.html'
+            template: './src/template.html',
+            favicon: './src/assets/favIcon.ico'
         }),
     ],
     module: {
@@ -60,6 +61,6 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'build')
     },
 }
