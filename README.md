@@ -1,8 +1,8 @@
 # hacker-news in React
 
-Hacker-news with search: https://predragdavidovic.github.io/hacker-news/
+## Hacker-news with search: https://predragdavidovic.github.io/hacker-news/
 
-I replicated and used API of https://hn.algolia.com/.
+### I replicated https://hn.algolia.com/ and used their API.
 
 ![hacker-news](https://raw.githubusercontent.com/predragdavidovic/hacker-news/master/hacker-news-screenshot.png)
 
